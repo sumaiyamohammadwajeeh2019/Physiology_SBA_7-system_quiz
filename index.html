@@ -6,8 +6,13 @@
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <style>
 *{box-sizing:border-box}body{margin:0;font-family:system-ui;background:#eff6ff;padding:10px}
-.header{background:#1e3a8a;color:#fff;padding:14px;border-radius:16px;text-align:center}
+.header{background:linear-gradient(135deg,#1e3a8a 0%,#1e40af 60%,#1d4ed8 100%);color:#fff;padding:14px;border-radius:16px;text-align:center;border:3px solid #FFD700}
 .header small{color:#FFD700}
+.logo-row{display:flex;align-items:center;justify-content:center;gap:10px}
+.logo-badge{width:54px;height:54px;background:#FFD700;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;border:2px solid #fff;box-shadow:0 2px 8px #0004}
+.creator{background:#FFD700;color:#1e3a8a;border-radius:10px;padding:6px 10px;margin-top:8px;font-weight:bold;font-size:13px;display:inline-block}
+.footer{text-align:center;font-size:12px;color:#1e3a8a;margin:12px 0;font-weight:bold}
+.footer span{color:#b8860b}
 .card{background:#fff;border-radius:14px;padding:14px;margin:10px 0;box-shadow:0 2px 10px #0001}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 @media(min-width:700px){.grid{grid-template-columns:1fr 1fr 1fr 1fr}}
@@ -18,11 +23,14 @@
 .badge{min-width:28px;height:28px;background:#e2e8f0;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold}
 .explain{background:#fffbeb;border:1px solid #f59e0b;border-radius:10px;padding:10px;margin-top:10px;font-size:13px;display:none}
 .ad-box{background:#fffbeb;border:1px dashed #f59e0b;padding:6px;border-radius:10px;text-align:center;font-size:11px;margin:8px 0}
-.score{display:flex;justify-content:space-between;font-weight:bold}
+.score{display:flex;justify-content:space-between;font-weight:bold;align-items:center}
+.timer-badge{background:#FFD700;color:#1e3a8a;border:2px solid #1e3a8a;border-radius:10px;padding:4px 12px;font-weight:bold;font-size:15px;box-shadow:0 2px 6px #0003}
+.score-badge{background:#1e3a8a;color:#FFD700;border-radius:10px;padding:4px 12px;font-weight:bold;border:2px solid #FFD700}
+.qno-badge{background:#eff6ff;color:#1e3a8a;border-radius:10px;padding:4px 10px;border:2px solid #1e3a8a}
 </style>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXX" crossorigin="anonymous"></script>
 </head><body>
-<div class="header"><b>🩺 Physiology SBA - 7 Systems</b><br>GP | Blood | CVS | Respiratory | Renal | GIT | Neuro + Special Sense<br><small>100 SBA | Single Best Answer | Halal Ads Only</small></div>
+<div class="header"><div class="logo-row"><div class="logo-badge">🩺</div><div><b>Physiology SBA - 7 Systems</b><br><span style="font-size:13px">GP | Blood | CVS | Respiratory | Renal | GIT | Neuro + Special Sense</span></div><div class="logo-badge">⚕️</div></div><br><small>100 SBA | Single Best Answer | Halal Ads Only</small><br><div class="creator">Creator: Dr SM, Physiologist, Bangladesh 🇧🇩</div></div>
 
 <!-- top ad removed -->
 
@@ -41,14 +49,15 @@
 </div>
 
 <div class="card" id="quiz" style="display:none">
-<div class="score"><span id="qno"></span><span>⏱ <span id="timer">90s</span></span><span>Score: <span id="sc">0</span></span></div>
+<div class="score"><span id="qno" class="qno-badge"></span><span class="timer-badge">⏱ <span id="timer">1:30</span></span><span class="score-badge">Score: <span id="sc">0</span></span></div>
 <div id="qtext" style="font-weight:bold;margin:12px 0;font-size:16px"></div>
 <div id="stems"></div>
 <div class="explain" id="explain"></div>
 <button class="btn" id="next" style="display:none;width:100%;margin-top:10px;background:#FFD700;color:#1e3a8a" onclick="nextQ()">Next →</button>
 </div>
 
-<div class="card" id="result" style="display:none;text-align:center"><h2 id="rscore"></h2><p id="rmsg"></p><div class="ad-box" style="margin:12px 0;padding:10px;border:1px dashed #f59e0b;border-radius:10px;background:#fffbeb;font-size:12px">Advertisement<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXX" data-ad-slot="123456" data-ad-format="auto" data-full-width-responsive="true"></ins></div><button class="btn" onclick="location.reload()">Play Again</button></div>
+<div class="card" id="result" style="display:none;text-align:center"><h2 id="rscore"></h2><p id="rmsg"></p><div class="creator">Creator: Dr SM, Physiologist, Bangladesh 🇧🇩</div><div class="ad-box" style="margin:12px 0;padding:10px;border:1px dashed #f59e0b;border-radius:10px;background:#fffbeb;font-size:12px">Advertisement<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXX" data-ad-slot="123456" data-ad-format="auto" data-full-width-responsive="true"></ins></div><button class="btn" onclick="location.reload()">Play Again</button></div>
+<div class="footer">Created by <span>Dr SM, Physiologist, Bangladesh</span> 🩺⚕️ | 💛 Blue & Gold SBA Series</div>
 
 <script>
 const BANK={
@@ -168,6 +177,8 @@ Neuro:[
 ]
 };
 let topic, qs=[], idx=0, score=0, timer, sec=90;
+const QTIME=90; // 1.5 minutes per question (90 seconds)
+function fmt(s){return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');}
 function start(t){
  topic=t; qs=[...BANK[t]]; 
  document.getElementById('setup').style.display='none'; document.getElementById('quiz').style.display='block';
@@ -175,7 +186,7 @@ function start(t){
 }
 function showQ(){
  if(idx>=qs.length){end();return}
- sec=90; clearInterval(timer); tick(); timer=setInterval(tick,1000);
+ sec=QTIME; clearInterval(timer); tick(); timer=setInterval(tick,1000);
  let q=qs[idx];
  document.getElementById('qno').innerText=`Q ${idx+1}/${qs.length} ${topic}`;
  document.getElementById('qtext').innerText=q.q;
@@ -184,7 +195,7 @@ function showQ(){
  document.getElementById('stems').innerHTML=h;
  document.getElementById('explain').style.display='none'; document.getElementById('next').style.display='none';
 }
-function tick(){document.getElementById('timer').innerText=sec+'s'; sec--; if(sec<0) check(-1);}
+function tick(){document.getElementById('timer').innerText=fmt(Math.max(sec,0)); sec--; if(sec<0) check(-1);}
 function check(i){
  clearInterval(timer);
  let q=qs[idx]; let els=document.querySelectorAll('.stem');
