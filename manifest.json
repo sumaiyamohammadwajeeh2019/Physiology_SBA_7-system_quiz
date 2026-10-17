@@ -1,0 +1,17 @@
+{
+  "name": "Physiology SBA - 7 System",
+  "short_name": "Physio SBA",
+  "description": "100 SBA across GP, Blood, CVS, Respiratory, Renal, GIT, Neuro + Special Sense",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#eff6ff",
+  "theme_color": "#1e3a8a",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

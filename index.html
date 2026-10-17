@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Physiology SBA - 7 System | 100 SBA | WorldMedEdu</title>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#1e3a8a">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:system-ui;background:#eff6ff;padding:10px}
+.header{background:#1e3a8a;color:#fff;padding:14px;border-radius:16px;text-align:center}
+.header small{color:#FFD700}
+.card{background:#fff;border-radius:14px;padding:14px;margin:10px 0;box-shadow:0 2px 10px #0001}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+@media(min-width:700px){.grid{grid-template-columns:1fr 1fr 1fr 1fr}}
+.btn{padding:12px;border-radius:10px;border:0;font-weight:bold;cursor:pointer;background:#1e3a8a;color:#fff}
+.btn-gp{background:#1e3a8a}.btn-blood{background:#b91c1c}.btn-cvs{background:#be123c}.btn-resp{background:#0e7490}.btn-renal{background:#6d28d9}.btn-git{background:#92400e}.btn-neuro{background:#065f46}
+.stem{padding:12px;border:2px solid #cbd5e1;border-radius:12px;margin:8px 0;cursor:pointer;display:flex;gap:10px}
+.stem.correct{background:#dcfce7;border-color:#16a34a}.stem.wrong{background:#fee2e2;border-color:#dc2626}.stem.best{box-shadow:0 0 0 3px #fde68a}
+.badge{min-width:28px;height:28px;background:#e2e8f0;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold}
+.explain{background:#fffbeb;border:1px solid #f59e0b;border-radius:10px;padding:10px;margin-top:10px;font-size:13px;display:none}
+.ad-box{background:#fffbeb;border:1px dashed #f59e0b;padding:6px;border-radius:10px;text-align:center;font-size:11px;margin:8px 0}
+.score{display:flex;justify-content:space-between;font-weight:bold}
+</style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXX" crossorigin="anonymous"></script>
+</head><body>
+<div class="header"><b>🩺 Physiology SBA - 7 Systems</b><br>GP | Blood | CVS | Respiratory | Renal | GIT | Neuro + Special Sense<br><small>100 SBA | Single Best Answer | Halal Ads Only</small></div>
+
+<!-- top ad removed -->
+
+<div class="card" id="setup">
+<b>Select System (7 ta):</b>
+<div class="grid">
+<button class="btn btn-gp" onclick="start('GP')">GP<br><small>15 Q</small></button>
+<button class="btn btn-blood" onclick="start('Blood')">Blood<br><small>14 Q</small></button>
+<button class="btn btn-cvs" onclick="start('CVS')">CVS<br><small>14 Q</small></button>
+<button class="btn btn-resp" onclick="start('Respiratory')">Respiratory<br><small>14 Q</small></button>
+<button class="btn btn-renal" onclick="start('Renal')">Renal<br><small>14 Q</small></button>
+<button class="btn btn-git" onclick="start('GIT')">GIT<br><small>14 Q</small></button>
+<button class="btn btn-neuro" onclick="start('Neuro')">Neuro + Special<br><small>15 Q</small></button>
+</div>
+
+</div>
+
+<div class="card" id="quiz" style="display:none">
+<div class="score"><span id="qno"></span><span>⏱ <span id="timer">90s</span></span><span>Score: <span id="sc">0</span></span></div>
+<div id="qtext" style="font-weight:bold;margin:12px 0;font-size:16px"></div>
+<div id="stems"></div>
+<div class="explain" id="explain"></div>
+<button class="btn" id="next" style="display:none;width:100%;margin-top:10px;background:#FFD700;color:#1e3a8a" onclick="nextQ()">Next →</button>
+</div>
+
+<div class="card" id="result" style="display:none;text-align:center"><h2 id="rscore"></h2><p id="rmsg"></p><div class="ad-box" style="margin:12px 0;padding:10px;border:1px dashed #f59e0b;border-radius:10px;background:#fffbeb;font-size:12px">Advertisement<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXX" data-ad-slot="123456" data-ad-format="auto" data-full-width-responsive="true"></ins></div><button class="btn" onclick="location.reload()">Play Again</button></div>
+
+<script>
+const BANK={
+GP:[
+{q:"RMP -90mV, reason low intracellular Na+?",stems:["Low Na leak","Impermeable membrane","Na-K ATPase 3Na out 2K in","High K inside","Cl pump"],best:2,exp:"Pump actively 3 Na out."},
+{q:"Action potential all-or-none?",stems:["K close","Na voltage-gated explosive open","Ca enters","Cl leaves","Pump stops"],best:1,exp:"Na channel positive feedback."},
+{q:"Osmolarity 1M NaCl vs 1M urea effective?",stems:["Equal","Urea higher","NaCl higher - 2 particles non-penetrating","Water equal","No osmosis"],best:2,exp:"NaCl 2 particles + non-penetrating."},
+{q:"Active transport example?",stems:["Simple diffusion","Facilitated diffusion","Na-K pump against gradient","Osmosis","Filtration"],best:2,exp:"Against gradient + ATP."},
+{q:"Gap junction function?",stems:["Slow chemical","Electrical synapse fast","Hormone","Only in nerve","No function"],best:1,exp:"Electrical fast."},
+{q:"Second messenger for protein kinase A?",stems:["cAMP","cGMP","IP3","DAG","Ca"],best:0,exp:"cAMP activates PKA."},
+{q:"Apoptosis vs necrosis difference?",stems:["Both swelling","Apoptosis programmed, no inflammation","Necrosis programmed","Both inflammation","Same"],best:1,exp:"Apoptosis programmed, no inflam."},
+{q:"Carrier mediated diffusion saturates because?",stems:["Lipid soluble","Limited carriers","Water soluble","Large pore","No reason"],best:1,exp:"Limited carrier number."},
+{q:"Cell swelling in hypotonic?",stems:["Water out","Water in due to osmosis","Na out","K in","Protein out"],best:1,exp:"Water in."},
+{q:"Nernst for K+ -94mV means?",stems:["K at equilibrium","Na equilibrium","Cl equilibrium","Pump potential","Zero"],best:0,exp:"K equilibrium."},
+{q:"Endocytosis for?",stems:["Small ions","Large proteins via vesicle","Water","O2","CO2"],best:1,exp:"Large via vesicle."},
+{q:"Starling forces edema?",stems:["Increased plasma protein","Decreased capillary hydrostatic","Increased interstitial hydrostatic","Increased capillary permeability","Decreased interstitial oncotic"],best:3,exp:"Permeability increases filtrate."},
+{q:"Negative feedback?",stems:["Clotting","Childbirth","BP control via baroreceptor","Action potential","Fever increase"],best:2,exp:"BP control negative."},
+{q:"Positive feedback?",stems:["BP control","Blood clotting cascade","Temperature","pH","Glucose"],best:1,exp:"Clotting amplifies."},
+{q:"Aquaporin?",stems:["Na channel","Water channel fast","Glucose","Protein","Lipid"],best:1,exp:"Water channel."}
+],
+Blood:[
+{q:"RBC life 120 days destruction site?",stems:["Kidney","Spleen - reticuloendothelial","Lung","Heart","Brain"],best:1,exp:"Spleen macrophages."},
+{q:"Hb A composition?",stems:["2α 2β","2α 2γ","2α 2δ","2β 2γ","4α"],best:0,exp:"2α2β adult."},
+{q:"Iron deficiency lab?",stems:["High ferritin","Low ferritin + high TIBC","High B12","High folate","Low retic"],best:1,exp:"Low ferritin high TIBC."},
+{q:"Hemophilia A factor?",stems:["Factor VIII deficiency","IX","VII","X","V"],best:0,exp:"Factor VIII."},
+{q:"Platelet plug first?",stems:["Coagulation","Adhesion via vWF to collagen","Fibrin","Clot retraction","Fibrinolysis"],best:1,exp:"Adhesion first."},
+{q:"Blood group O antibody?",stems:["Anti-A anti-B present","No antibody","Only anti-A","Only anti-B","Anti-Rh"],best:0,exp:"O has both antibodies."},
+{q:"ESR increased in?",stems:["Polycythemia","Infection/inflammation high fibrinogen","Anemia low","Allergy","Dehydration"],best:1,exp:"Fibrinogen rouleaux increase ESR."},
+{q:"Vit K dependent?",stems:["Factor VIII","Factors II,VII,IX,X protein C,S","Factor V","Factor I","Factor III"],best:1,exp:"II,VII,IX,X,C,S."},
+{q:"WBC first in acute inflammation?",stems:["Lymphocyte","Neutrophil","Eosinophil","Basophil","Monocyte"],best:1,exp:"Neutrophil first."},
+{q:"Bilirubin unconjugated increased in?",stems:["Obstructive jaundice","Hemolytic jaundice - overproduction","Hepatitis","Gallstone","Pancreatic CA"],best:1,exp:"Hemolysis overproduction."},
+{q:"Clotting time prolonged in?",stems:["Hemophilia - intrinsic","Platelet defect","Vitamin C deficiency","Thrombocytopenia","Leukemia"],best:0,exp:"Intrinsic factor deficiency."},
+{q:"O2 carrying affected by?",stems:["2,3 BPG right shift helps release","Left shift always good","pH no effect","CO2 no effect","Temp no effect"],best:0,exp:"2,3BPG right shift releases O2."},
+{q:"MCHC in spherocytosis?",stems:["Decreased","Increased - less volume more Hb concentration","Normal always","Zero","Variable"],best:1,exp:"Increased MCHC spherocyte."},
+{q:"Retic count increased in?",stems:["Aplastic anemia","Hemolytic anemia - marrow response","Iron deficiency untreated","B12 deficiency","Folate deficiency"],best:1,exp:"Marrow response."}
+],
+CVS:[
+{q:"First heart sound due to?",stems:["Semilunar closure","AV valve closure","Atrial contraction","Rapid filling","Ejection"],best:1,exp:"AV closure S1."},
+{q:"CO 5L/min increased by?",stems:["Increased TPR","Decreased venous return","Sympathetic ↑HR contractility","Increased afterload","Vagal"],best:2,exp:"Sympathetic increases CO."},
+{q:"Baroreceptor sudden stand immediate?",stems:["ADH","HR ↑ vasoconstriction sympathetic","HR ↓","Renin","ANP"],best:1,exp:"Immediate sympathetic."},
+{q:"Starling law?",stems:["HR affects","Increased EDV increases force","Afterload increases","No relation","Decreased preload increases"],best:1,exp:"EDV ↑ force ↑."},
+{q:"ECG QRS?",stems:["Atrial depolarization","Ventricular depolarization","Ventricular repolarization","Atrial repol","SA node"],best:1,exp:"Vent depol QRS."},
+{q:"AV node delay purpose?",stems:["Slow HR","Allow atrial empty before ventricle contracts","No purpose","Increase CO","Decrease CO"],best:1,exp:"Atrial empty."},
+{q:"Pulse pressure increased in?",stems:["Aortic stenosis","Aortic regurgitation - wide pulse","Mitral stenosis","Tricuspid stenosis","Heart failure"],best:1,exp:"AR wide pulse."},
+{q:"Coronary flow during?",stems:["Systole","Diastole - compressed in systole","Equal","Only exercise","Never"],best:1,exp:"Diastole."},
+{q:"Jugular venous pulse a wave?",stems:["Ventricular systole","Atrial contraction","Rapid filling","Atrial relaxation","Semilunar closure"],best:1,exp:"Atrial contraction a wave."},
+{q:"Heart failure edema mechanism?",stems:["Low capillary hydrostatic","High oncotic","Increased venous hydrostatic + Na retention","Low permeability","Low lymph"],best:2,exp:"Venous pressure + Na water retention."},
+{q:"Vagal stimulation effect?",stems:["HR ↑","HR ↓ via SA node","Contractility ↑","Conduction faster","No effect"],best:1,exp:"Vagal decreases SA."},
+{q:"Long QT risk?",stems:["Bradycardia safe","Torsades de pointes","No risk","High K safe","Low risk"],best:1,exp:"Torsades."},
+{q:"Afterload defined?",stems:["EDV","Aortic pressure ventricle must overcome","Venous return","HR","Preload"],best:1,exp:"Aortic pressure afterload."},
+{q:"Inotropic positive?",stems:["Vagal","Sympathetic norepi","Acetylcholine","Adenosine","K+"],best:1,exp:"Sympathetic positive inotropic."}
+],
+Respiratory:[
+{q:"Tidal volume 500ml alveolar ventilation?",stems:["500ml","350ml (500-150 dead space)","150ml","1000ml","0"],best:1,exp:"500-150 dead space=350."},
+{q:"Surfactant by?",stems:["Type I","Type II pneumocyte","Clara","Goblet","Endothelial"],best:1,exp:"Type II."},
+{q:"High altitude ventilation?",stems:["High PaCO2","Low PaO2 peripheral chemoreceptor","High pH","High Hb","Low BPG"],best:1,exp:"Low O2 peripheral."},
+{q:"Asthma expiration difficulty?",stems:["Edema only","Dynamic compression intrathoracic pressure","Bronchospasm only","Mucus only","Recoil increase"],best:1,exp:"Dynamic compression."},
+{q:"O2-Hb curve right shift?",stems:["Low CO2","High CO2, low pH, high temp, high BPG","High pH","Low temp","Low BPG"],best:1,exp:"Right shift factors."},
+{q:"Pneumothorax lung collapses because?",stems:["Positive pleural pressure normally","Negative pleural keeps inflated, loss -> recoil collapses","Surfactant increase","Airway block","Diaphragm"],best:1,exp:"Negative pressure loss."},
+{q:"Dead space increased in?",stems:["Asthma obstruction","Emphysema - alveolar wall destruction","Pneumonia","Edema","Fibrosis"],best:1,exp:"Emphysema alveolar dead space."},
+{q:"Central chemoreceptor stimulus?",stems:["Low O2","High H+ from CO2 via CSF","High O2","Low H+","K+"],best:1,exp:"CO2 -> H+ CSF."},
+{q:"Hering-Breuer inflation reflex?",stems:["Increase ventilation","Prevent overinflation via vagal stretch","Decrease HR","Increase BP","No effect"],best:1,exp:"Prevent overinflation."},
+{q:"Diffusion limited example?",stems:["O2 normal","CO diffusion limited? Actually perfusion limited","CO2 perfusion limited","O2 always perfusion","All diffusion"],best:2,exp:"CO2 perfusion limited, but CO? Actually O2 diffusion limited in disease. CO2 perfusion."},
+{q:"Compliance decreased in?",stems:["Emphysema high compliance","Fibrosis low compliance","Asthma","Normal","Aging"],best:1,exp:"Fibrosis low compliance."},
+{q:"Ventilation-perfusion V/Q apex?",stems:["Low V/Q 0.6","High V/Q 3.3 apex (vent > perf?) Actually high","0.8 ideal","0","Equal"],best:1,exp:"Apex high V/Q 3.3."},
+{q:"Cyanosis appears when?",stems:["Hb 15","Deoxy Hb >5g/dL","Oxy Hb high","CO poisoning","Anemia severe - actually not cyanotic"],best:1,exp:"Deoxy >5g."},
+{q:"Respiratory center apneustic location?",stems:["Medulla","Lower pons","Upper pons","Spinal","Cortex"],best:1,exp:"Lower pons apneustic."}
+],
+Renal:[
+{q:"GFR 125 ml/min increased by protein via?",stems:["High arterial pressure","Afferent dilation tubuloglomerular feedback","Efferent constriction only","Bowman's pressure increase","Low plasma protein"],best:1,exp:"Afferent dilation amino acid."},
+{q:"ADH acts on?",stems:["PCT","DCT & CD - aquaporin 2","Loop","Glomerulus","Bowman's"],best:1,exp:"DCT CD aquaporin."},
+{q:"Aldosterone effect?",stems:["Na loss K gain","Na reabsorption K secretion H secretion","Water only","Ca","Phosphate"],best:1,exp:"Na reabs K sec."},
+{q:"Acid-base HCO3 12 pH 7.2?",stems:["Met alkalosis","Met acidosis","Resp acidosis","Resp alkalosis","Normal"],best:1,exp:"Low HCO3 met acidosis."},
+{q:"K+ secretion in?",stems:["PCT","DCT & CD via aldosterone","Loop","Glomerulus","Thin loop"],best:1,exp:"DCT CD."},
+{q:"Glucose threshold?",stems:["100mg/dl","180mg/dl - Tm 375mg/min","300","50","500"],best:1,exp:"180 threshold."},
+{q:"Countercurrent in?",stems:["PCT","Loop of Henle for concentration","Glomerulus","CD only","Bowman's"],best:1,exp:"Loop."},
+{q:"Renin released by?",stems:["High BP","Low Na at macula densa + sympathetic β1 + low pressure granular cells","High Na","High K","High volume"],best:1,exp:"Low Na low pressure sympathetic."},
+{q:"Clearance inulin equals?",stems:["RPF","GFR - not secreted not reabsorbed","RBF","Tubular secretion","Zero"],best:1,exp:"GFR."},
+{q:"PAH clearance equals?",stems:["GFR","RPF ~90% - secreted","RBF","Zero","Tubular reabs"],best:1,exp:"RPF."},
+{q:"Loop diuretic acts?",stems:["PCT","Thick ascending Na-K-2Cl","DCT","CD","Glomerulus"],best:1,exp:"Thick asc."},
+{q:"Diluting segment?",stems:["PCT","Thick ascending - impermeable to water","CD","Glomerulus","Thin descending"],best:1,exp:"Thick asc diluting."},
+{q:"Urea handling?",stems:["Only filtered","Filtered reabsorbed recycled medulla","Only secreted","Not filtered","Only excreted"],best:1,exp:"Filtered reabs recycled."},
+{q:"Proteinuria minimal change?",stems:["Large protein","Selective albumin loss foot process fusion","Hematuria only","No protein","Glucose"],best:1,exp:"Selective albumin."}
+],
+GIT:[
+{q:"Chief cells?",stems:["HCl","Pepsinogen","Mucus","Secretin","Gastrin"],best:1,exp:"Pepsinogen."},
+{q:"Parietal HCl via?",stems:["Na-H","H-K ATPase proton pump","Diffusion","Cl cotransport","CA only"],best:1,exp:"Proton pump."},
+{q:"CCK after fat?",stems:["Secretin","CCK gallbladder contract sphincter relax","Gastrin","Motilin","VIP"],best:1,exp:"CCK."},
+{q:"Iron absorbed?",stems:["Duodenum DMT1 Fe2+","Stomach","Ileum","Colon","Jejunum heme only"],best:0,exp:"Duodenum DMT1."},
+{q:"Peristalsis control?",stems:["Vagus only","Enteric myenteric plexus independent","Spinal","Hormone only","Sympathetic only"],best:1,exp:"Enteric independent."},
+{q:"Secretin stimulus?",stems:["Fat","Acid in duodenum","Protein","Distension","Bile"],best:1,exp:"Acid stimulates secretin."},
+{q:"Bile salt?",stems:["Protein digestion","Fat digestion micelle","Carb","Vitamin","Water"],best:1,exp:"Fat micelle."},
+{q:"Migrating motor complex?",stems:["After meal","Fasting - motilin","Sleep","Exercise","No function"],best:1,exp:"Fasting motilin."},
+{q:"Vit B12 absorbed?",stems:["Duodenum","Ileum with intrinsic factor","Stomach","Jejunum","Colon"],best:1,exp:"Ileum IF."},
+{q:"Lactase deficiency?",stems:["No gas","Osmotic diarrhea gas after milk","Constipation","No symptom","Vomiting only"],best:1,exp:"Osmotic diarrhea."},
+{q:"Defecation reflex?",stems:["Somatic only","Parasympathetic via pelvic nerve","Sympathetic only","Voluntary only","No reflex"],best:1,exp:"Parasympathetic pelvic."},
+{q:"Saliva high K?",stems:["Plasma like","High K low Na due to ductal modification","High Na","No electrolyte","High Cl only"],best:1,exp:"Duct modifies high K."},
+{q:"Gastrin released by?",stems:["Acid","Protein + distension + vagal","Fat","Bile","Secretin"],best:1,exp:"Protein distension vagal."},
+{q:"Enterohepatic?",stems:["Protein","Bile salts recycled 95% ileum","Water","Vitamin","Hormone"],best:1,exp:"Bile salt recycling."}
+],
+Neuro:[
+{q:"RMP -70 neuron?",stems:["Na-K pump only","K leak + pump","Na leak","Cl pump","Ca"],best:1,exp:"K leak + pump."},
+{q:"Fastest conduction?",stems:["Unmyelinated","Large myelinated A alpha 120m/s","C fiber","B fiber","Small"],best:1,exp:"Large myelinated fastest."},
+{q:"Upper motor neuron lesion?",stems:["Flaccid paralysis","Spastic paralysis hyperreflexia Babinski +","Fasciculation","Atrophy early","Hypotonia"],best:1,exp:"Spastic hyperreflexia."},
+{q:"Lower motor neuron?",stems:["Spastic","Flaccid hypotonia hyporeflexia atrophy fasciculation","Hyperreflexia","Babinski +","No atrophy"],best:1,exp:"Flaccid LMN."},
+{q:"CSF produced by?",stems:["Arachnoid","Choroid plexus 500ml/day","Dura","Pia","Neuron"],best:1,exp:"Choroid plexus."},
+{q:"Blood brain barrier?",stems:["Fenestrated","Tight junction endothelial + astrocyte foot","No barrier","Large pore","Only dura"],best:1,exp:"Tight junction."},
+{q:"Pain fast A delta vs C?",stems:["C fast sharp","A delta fast sharp, C slow dull","Both same","No pain","Only C"],best:1,exp:"A delta fast sharp."},
+{q:"Pupillary light reflex pathway?",stems:["Optic to visual cortex","Optic -> pretectal -> Edinger-Westphal -> ciliary ganglion -> constrictor","Only sympathetic","Only somatic","No reflex"],best:1,exp:"Pretectal EW ciliary constrictor."},
+{q:"Deafness conduction vs sensorineural test?",stems:["Weber lateralizes to normal in SNHL? Actually to deaf in conductive, good ear in SNHL","Rinne negative conductive","Both same","No test","Only audiometry"],best:1,exp:"Weber lateralizes."},
+{q:"Organ of Corti?",stems:["Vestibular","Hearing receptor hair cells","Vision","Smell","Taste"],best:1,exp:"Hearing hair cells."},
+{q:"Rods vs cones?",stems:["Cones night","Rods night low acuity","Cones night high acuity","Both day","No difference"],best:1,exp:"Rods night low acuity."},
+{q:"Olfaction nerve?",stems:["Optic","Olfactory I","Facial","Trigeminal","Vagus"],best:1,exp:"CN I."},
+{q:"Taste sweet papillae?",stems:["Circumvallate only","Fungiform anterior - sweet tip","Foliate","Filiform","All same"],best:1,exp:"Fungiform tip sweet."},
+{q:"Cerebellum lesion?",stems:["Spastic","Ataxia intention tremor dysdiadochokinesia","Paralysis","Sensory loss","No sign"],best:1,exp:"Ataxia cerebellar."},
+{q:"Basal ganglia disease?",stems:["Myasthenia","Parkinson rigidity tremor bradykinesia","MS","MND","Myopathy"],best:1,exp:"Parkinson basal ganglia."}
+]
+};
+let topic, qs=[], idx=0, score=0, timer, sec=90;
+function start(t){
+ topic=t; qs=[...BANK[t]]; 
+ document.getElementById('setup').style.display='none'; document.getElementById('quiz').style.display='block';
+ idx=0; score=0; showQ();
+}
+function showQ(){
+ if(idx>=qs.length){end();return}
+ sec=90; clearInterval(timer); tick(); timer=setInterval(tick,1000);
+ let q=qs[idx];
+ document.getElementById('qno').innerText=`Q ${idx+1}/${qs.length} ${topic}`;
+ document.getElementById('qtext').innerText=q.q;
+ document.getElementById('sc').innerText=score;
+ let h=''; q.stems.forEach((s,i)=>{h+=`<div class="stem" onclick="check(${i})"><div class="badge">${String.fromCharCode(65+i)}</div><div>${s}</div></div>`});
+ document.getElementById('stems').innerHTML=h;
+ document.getElementById('explain').style.display='none'; document.getElementById('next').style.display='none';
+}
+function tick(){document.getElementById('timer').innerText=sec+'s'; sec--; if(sec<0) check(-1);}
+function check(i){
+ clearInterval(timer);
+ let q=qs[idx]; let els=document.querySelectorAll('.stem');
+ els.forEach((el,ii)=>{if(ii==q.best) el.classList.add('correct','best'); if(ii==i && i!=q.best) el.classList.add('wrong'); el.style.pointerEvents='none';});
+ let ex=document.getElementById('explain'); ex.style.display='block';
+ if(i==q.best){score+=10; ex.innerHTML=`✅ Correct: ${String.fromCharCode(65+q.best)}<br>${q.exp}`;}
+ else if(i==-1){ex.innerHTML=`⏰ Time up! Correct: ${String.fromCharCode(65+q.best)}<br>${q.exp}`;}
+ else {ex.innerHTML=`❌ You chose ${String.fromCharCode(65+i)}, Correct is ${String.fromCharCode(65+q.best)}<br>${q.exp}`;}
+ document.getElementById('sc').innerText=score; document.getElementById('next').style.display='block';
+}
+function nextQ(){idx++; showQ();}
+function end(){
+ document.getElementById('quiz').style.display='none'; document.getElementById('result').style.display='block';
+ document.getElementById('rscore').innerText=`Score: ${score}/${qs.length*10} - ${topic}`;
+ document.getElementById('rmsg').innerText=score>=qs.length*7?'Excellent! SBA Expert':'Practice more to improve.';try{(adsbygoogle=window.adsbygoogle||[]).push({});}catch(e){}
+ // save score to backend DB (SQLite on Render, ignored if offline)
+ try{fetch('/api/score',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({topic,score,total:qs.length*10})});}catch(e){}
+}
+if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/service-worker.js').catch(()=>{});});}
+</script>
+</body></html>
